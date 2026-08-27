@@ -10,10 +10,11 @@ export function Player(player: Player) {
     useState<string>(initialNamePlayer);
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
 
-  function EditName(event: ChangeEvent<HTMLInputElement>) {
+  function editName(event: ChangeEvent<HTMLInputElement>) {
     console.log(event.target.value);
     setEditedNamePlayer(event.target.value);
   }
+
   return (
     <li>
       <span className="player">
@@ -34,7 +35,7 @@ export function Player(player: Player) {
             <input
               type="text"
               value={editedNamePlayer}
-              onChange={(e) => EditName(e)}
+              onChange={(e) => editName(e)}
             />
             <button
               onClick={() => {
