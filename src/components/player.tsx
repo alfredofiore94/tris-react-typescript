@@ -1,19 +1,25 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import type { Player } from "../models/player";
 
 export function Player(player: Player) {
-  const [namePlayer, setNamePlayer] = useState<string>(player.name);
+  const [initialNamePlayer, setInitialNamePlayer] = useState<string>(
+    player.name,
+  );
+
+  const [editedNamePlayer, setEditedNamePlayer] =
+    useState<string>(initialNamePlayer);
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
 
-  function EditName(nameEdit: string) {
-    setNamePlayer(nameEdit);
+  function EditName(event: ChangeEvent<HTMLInputElement>) {
+    console.log(event.target.value);
+    setEditedNamePlayer(event.target.value);
   }
   return (
     <li>
       <span className="player">
         {!isEditingName ? (
           <>
-            <span className="player-name"> {namePlayer}</span>
+            <span className="player-name"> {initialNamePlayer}</span>
             <span className="player-symbol"> {player.symbol}</span>
             <button
               onClick={() => {
@@ -25,10 +31,15 @@ export function Player(player: Player) {
           </>
         ) : (
           <>
-            <input type="text" required value={player.name} />
+            <input
+              type="text"
+              value={editedNamePlayer}
+              onChange={(e) => EditName(e)}
+            />
             <button
               onClick={() => {
                 setIsEditingName(false);
+                setInitialNamePlayer(editedNamePlayer);
               }}
             >
               ✅
@@ -36,6 +47,7 @@ export function Player(player: Player) {
             <button
               onClick={() => {
                 setIsEditingName(false);
+                setEditedNamePlayer(initialNamePlayer);
               }}
             >
               ❌
