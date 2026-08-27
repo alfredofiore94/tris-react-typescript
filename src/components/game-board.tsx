@@ -2,15 +2,11 @@ import { useState } from "react";
 import type { Player } from "../models/player";
 
 export default function GameBoard(player: Player) {
-  const initialGameBoard: string[][] | null[][] = [
+  const [gameBoard, setGameBoard] = useState<string[][] | null[][]>([
     [null, null, null],
     [null, null, null],
     [null, null, null],
-  ];
-
-  const [gameBoard, setGameBoard] = useState<string[][] | null[][]>(
-    initialGameBoard,
-  );
+  ]);
 
   const [lastsymbol, setLastSymbol] = useState<string>(player.symbol);
 
@@ -19,15 +15,18 @@ export default function GameBoard(player: Player) {
     colIndex: number,
     symbol: string,
   ) {
+    console.log("ale1", gameBoard);
     setGameBoard((prevGameBoard) => {
-      prevGameBoard[rowIndex][colIndex] = symbol;
-      setLastSymbol((prevSymbol) => {
-        return lastsymbol === "X" ? (prevSymbol = "O") : (prevSymbol = "X");
-      });
+      if (prevGameBoard[rowIndex][colIndex] === null) {
+        prevGameBoard[rowIndex][colIndex] = symbol;
+      }
+
       console.log(prevGameBoard);
 
       return prevGameBoard;
     });
+    setLastSymbol((prevSymbol) => (prevSymbol === "X" ? "O" : "X"));
+    console.log("ale2", gameBoard);
   }
 
   return (
@@ -38,6 +37,7 @@ export default function GameBoard(player: Player) {
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
                 <button
+                  disabled={playerSymbol !== null}
                   onClick={() => {
                     handleSelectSquare(rowIndex, colIndex, lastsymbol);
                   }}
