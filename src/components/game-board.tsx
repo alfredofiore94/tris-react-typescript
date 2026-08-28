@@ -2,44 +2,64 @@ import { useState } from "react";
 import type { Player } from "../models/player";
 
 export default function GameBoard(player: Player) {
-  const [gameBoard, setGameBoard] = useState<string[][] | null[][]>([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
+  //   const [gameBoard, setGameBoard] = useState<string[][] | null[][]>([
+  //     [null, null, null],
+  //     [null, null, null],
+  //     [null, null, null],
+  //   ]);
 
-  const [lastsymbol, setLastSymbol] = useState<string>(player.symbol);
+  //   const [lastsymbol, setLastSymbol] = useState<string>(player.symbol);
+
+  /*Utilizziamo un solo useState per far si che non vi sia un doppio caricamento 
+  del componente */
+  const [game, setGame] = useState<{
+    board: string[][] | null[][];
+    lastsymbol: string;
+  }>({
+    board: [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+    ],
+    lastsymbol: player.symbol,
+  });
 
   function handleSelectSquare(
     rowIndex: number,
     colIndex: number,
     symbol: string,
   ) {
-    console.log("ale1", gameBoard);
-    setGameBoard((prevGameBoard) => {
-      if (prevGameBoard[rowIndex][colIndex] === null) {
-        prevGameBoard[rowIndex][colIndex] = symbol;
+    //console.log("ale1", gameBoard);
+    // setGameBoard((prevGameBoard) => {
+    //   if (prevGameBoard[rowIndex][colIndex] === null) {
+    //     prevGameBoard[rowIndex][colIndex] = symbol;
+    //   }
+
+    //   console.log(prevGameBoard);
+
+    //   return prevGameBoard;
+    // });
+    // setLastSymbol((prevSymbol) => (prevSylasmbol === "X" ? "O" : "X"));
+    setGame((prevGame) => {
+      if (prevGame.board[rowIndex][colIndex] === null) {
+        prevGame.board[rowIndex][colIndex] = symbol;
+        prevGame.lastsymbol === "X" ? "O" : "X";
       }
-
-      console.log(prevGameBoard);
-
-      return prevGameBoard;
+      return { ...prevGame };
     });
-    setLastSymbol((prevSymbol) => (prevSymbol === "X" ? "O" : "X"));
-    console.log("ale2", gameBoard);
   }
 
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => (
+      {game.board.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
                 <button
-                  disabled={playerSymbol !== null}
+                  //   disabled={playerSymbol !== null}
                   onClick={() => {
-                    handleSelectSquare(rowIndex, colIndex, lastsymbol);
+                    handleSelectSquare(rowIndex, colIndex, game.lastsymbol);
                   }}
                 >
                   {playerSymbol}
