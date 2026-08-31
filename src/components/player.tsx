@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
-import type { Player } from "../models/player";
+import type { PlayerGame } from "../models/player-game";
 
-export function Player(player: Player) {
+export function Player(player: PlayerGame) {
   const [initialNamePlayer, setInitialNamePlayer] = useState<string>(
     player.name,
   );

@@ -1,20 +1,37 @@
-import { useState } from "react";
-import heroImg from "./assets/hero.png";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
 import "./App.css";
 import { Player } from "./components/player";
 import GameBoard from "./components/game-board";
+import { useState } from "react";
+import type { Game, GameResults } from "./models/game";
+import type { PlayerGame } from "./models/player-game";
+import { configGame } from "./config";
 
 function App() {
+  const [resuts, setResults] = useState<GameResults[]>([]);
+
+  function updateResults() {
+    setResults;
+  }
+
+  const giocatore1: PlayerGame = {
+    name: "Giocatore 1",
+    symbol: "X",
+  };
+
   return (
     <main>
       <div id="game-container">
         <ol id="players">
-          <Player name="Giocatore 1" symbol="X"></Player>
-          <Player name="Giocatore 2" symbol="O"></Player>
+          <Player {...configGame.player1}></Player>
+          <Player
+            name={configGame.player2.name}
+            symbol={configGame.player2.symbol}
+          ></Player>
         </ol>
-        <GameBoard name="Giocatore 1" symbol="X" />
+        <GameBoard
+          initialPlayer={configGame.player1}
+          onUpdateResults={updateResults}
+        />
       </div>
     </main>
   );

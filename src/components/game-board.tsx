@@ -1,7 +1,16 @@
 import { useState } from "react";
-import type { Player } from "../models/player";
+import type { Game } from "../models/game";
+import type { PlayerGame } from "../models/player-game";
+import { configGame } from "../config";
 
-export default function GameBoard(player: Player) {
+interface GameBoardProps {
+  initialPlayer: PlayerGame;
+  onUpdateResults: () => void;
+}
+const GameBoard: React.FC<GameBoardProps> = ({
+  initialPlayer,
+  onUpdateResults,
+}) => {
   //   const [gameBoard, setGameBoard] = useState<string[][] | null[][]>([
   //     [null, null, null],
   //     [null, null, null],
@@ -12,16 +21,9 @@ export default function GameBoard(player: Player) {
 
   /*Utilizziamo un solo useState per far si che non vi sia un doppio caricamento 
   del componente */
-  const [game, setGame] = useState<{
-    board: string[][] | null[][];
-    lastsymbol: string;
-  }>({
-    board: [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ],
-    lastsymbol: player.symbol,
+  const [game, setGame] = useState<Game>({
+    board: configGame.board,
+    lastSymbol: initialPlayer.symbol,
   });
 
   function handleSelectSquare(
@@ -43,10 +45,14 @@ export default function GameBoard(player: Player) {
     setGame((prevGame) => {
       if (prevGame.board[rowIndex][colIndex] === null) {
         prevGame.board[rowIndex][colIndex] = symbol;
-        prevGame.lastsymbol === "X" ? "O" : "X";
+        prevGame.lastSymbol === "X"
+          ? (prevGame.lastSymbol = "O")
+          : (prevGame.lastSymbol = "X");
+        console.log(". ssd", prevGame);
       }
       return { ...prevGame };
     });
+    onUpdateResults();
   }
 
   return (
@@ -59,7 +65,7 @@ export default function GameBoard(player: Player) {
                 <button
                   //   disabled={playerSymbol !== null}
                   onClick={() => {
-                    handleSelectSquare(rowIndex, colIndex, game.lastsymbol);
+                    handleSelectSquare(rowIndex, colIndex, game.lastSymbol!);
                   }}
                 >
                   {playerSymbol}
@@ -71,4 +77,6 @@ export default function GameBoard(player: Player) {
       ))}
     </ol>
   );
-}
+};
+
+export default GameBoard;
