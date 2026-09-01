@@ -4,17 +4,22 @@ import GameBoard from "./components/game-board";
 import { useState } from "react";
 import type { Game } from "./models/game";
 import { configGame } from "./config";
+import ResetGame from "./components/reset-board";
+
+const initialState = {
+  board: configGame.board.map((row) => {
+    return [...row];
+  }),
+  turn: configGame.player1.symbol,
+  hasWinner: false,
+  gameResults: [],
+};
 
 function App() {
   //const [resuts, setResults] = useState<GameResults[]>([]);
 
-  const [game, setGame] = useState<Game>({
-    board: configGame.board,
-    lastSymbol: configGame.player1.symbol,
-    hasWinner: false,
-    gameResults: [],
-  });
-  console.log("stato del gioco", game);
+  const [game, setGame] = useState<Game>(initialState);
+  //console.log("stato del gioco", game);
   //console.log("stato della board", game.board);
 
   /*
@@ -31,7 +36,7 @@ function App() {
   //console.log("risultati", game.gameResults);
   //setGame(gameUpdated);
   //  }
-
+  console.log("configGame", configGame);
   return (
     <main>
       <div id="game-container">
@@ -42,6 +47,22 @@ function App() {
             symbol={configGame.player2.symbol}
           ></Player>
         </ol>
+
+        {game.hasWinner && (
+          <ol>
+            <ResetGame
+              onReset={() => {
+                setGame((prevGame) => ({
+                  ...prevGame,
+                  board: configGame.board,
+                  lastSymbol: configGame.player1.symbol,
+                  hasWinner: false,
+                }));
+              }}
+            />
+          </ol>
+        )}
+
         <GameBoard
           initialPlayer={configGame.player1}
           onUpdateGame={setGame}

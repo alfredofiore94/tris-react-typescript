@@ -41,40 +41,42 @@ const GameBoard: React.FC<GameBoardProps> = ({
     const newGame = { ...game };
     if (newGame.board[rowIndex][colIndex] === null) {
       newGame.board[rowIndex][colIndex] = symbol;
-      newGame.lastSymbol === "X"
-        ? (newGame.lastSymbol = "O")
-        : (newGame.lastSymbol = "X");
-      console.log(". ssd", newGame);
+      newGame.turn === "X" ? (newGame.turn = "O") : (newGame.turn = "X");
+      //console.log(". ssd", newGame);
+      checkWinning(newGame);
     }
+    //console.log("click");
+    onUpdateGame(newGame); //onUpdateGame richiama la funzione setState del padre
+  }
+
+  function checkWinning(game: Game) {
     for (const combination of WINNING_COMBINATIONS) {
       const firtsSquareSymbol =
-        newGame.board[combination[0].row][combination[0].column];
+        game.board[combination[0].row][combination[0].column];
       const secondSquareSymbol =
-        newGame.board[combination[1].row][combination[1].column];
+        game.board[combination[1].row][combination[1].column];
       const thirdSquareSymbol =
-        newGame.board[combination[2].row][combination[2].column];
+        game.board[combination[2].row][combination[2].column];
 
       if (
         firtsSquareSymbol &&
         firtsSquareSymbol === secondSquareSymbol &&
         firtsSquareSymbol === thirdSquareSymbol
       ) {
-        newGame.hasWinner = true;
+        game.hasWinner = true;
         const winner =
-          configGame.player1.symbol === newGame.lastSymbol
-            ? configGame.player1
-            : configGame.player2;
-        newGame.gameResults.push({
-          board: newGame.board,
+          game.turn === configGame.player1.symbol
+            ? configGame.player2
+            : configGame.player1;
+        game.gameResults.push({
+          board: game.board,
           winner: winner,
         });
-        console.log("VITTORIA!");
+        //console.log("VITTORIA!", winner);
       }
     }
-
-    onUpdateGame(newGame); //onUpdateGame richiama la funzione setState del padre
   }
-
+  //console.log("game", game);
   return (
     <ol id="game-board">
       {game.board.map((row, rowIndex) => (
@@ -83,9 +85,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
                 <button
-                  //   disabled={playerSymbol !== null}
+                  disabled={playerSymbol !== null || game.hasWinner}
                   onClick={() => {
-                    handleSelectSquare(rowIndex, colIndex, game.lastSymbol!);
+                    handleSelectSquare(rowIndex, colIndex, game.turn!);
                   }}
                 >
                   {playerSymbol}

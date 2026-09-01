@@ -9,4 +9,6 @@ export const configGame = {
     [null, null, null],
     [null, null, null],
   ],
+  turn: undefined,
+  hasWinner: false,
 };

@@ -8,7 +8,7 @@ export interface GameResult extends GameBase {
   winner: PlayerGame;
 }
 export interface Game extends GameBase {
-  lastSymbol?: string;
+  turn?: string;
   hasWinner: boolean;
   gameResults: GameResult[];
 }
