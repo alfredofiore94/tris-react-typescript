@@ -1,15 +1,17 @@
 import { useState } from "react";
-import type { Game } from "../models/game";
 import type { PlayerGame } from "../models/player-game";
 import { configGame } from "../config";
-
+import { WINNING_COMBINATIONS } from "../utils/winning-combinations";
+import type { Game, GameResult } from "../models/game";
 interface GameBoardProps {
   initialPlayer: PlayerGame;
-  onUpdateResults: () => void;
+  game: Game;
+  onUpdateGame: (game: Game) => void;
 }
 const GameBoard: React.FC<GameBoardProps> = ({
-  initialPlayer,
-  onUpdateResults,
+  //initialPlayer,
+  game,
+  onUpdateGame,
 }) => {
   //   const [gameBoard, setGameBoard] = useState<string[][] | null[][]>([
   //     [null, null, null],
@@ -21,38 +23,56 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   /*Utilizziamo un solo useState per far si che non vi sia un doppio caricamento 
   del componente */
-  const [game, setGame] = useState<Game>({
-    board: configGame.board,
-    lastSymbol: initialPlayer.symbol,
-  });
+
+  /*if (game.hasWinner) {
+    const winner =
+      configGame.player1.symbol === game.lastSymbol
+        ? configGame.player1
+        : configGame.player2;
+    const gameResult: GameResults = { board: game.board, winner: winner };
+    onUpdateResults(game);
+  }*/
 
   function handleSelectSquare(
     rowIndex: number,
     colIndex: number,
     symbol: string,
   ) {
-    //console.log("ale1", gameBoard);
-    // setGameBoard((prevGameBoard) => {
-    //   if (prevGameBoard[rowIndex][colIndex] === null) {
-    //     prevGameBoard[rowIndex][colIndex] = symbol;
-    //   }
+    const newGame = { ...game };
+    if (newGame.board[rowIndex][colIndex] === null) {
+      newGame.board[rowIndex][colIndex] = symbol;
+      newGame.lastSymbol === "X"
+        ? (newGame.lastSymbol = "O")
+        : (newGame.lastSymbol = "X");
+      console.log(". ssd", newGame);
+    }
+    for (const combination of WINNING_COMBINATIONS) {
+      const firtsSquareSymbol =
+        newGame.board[combination[0].row][combination[0].column];
+      const secondSquareSymbol =
+        newGame.board[combination[1].row][combination[1].column];
+      const thirdSquareSymbol =
+        newGame.board[combination[2].row][combination[2].column];
 
-    //   console.log(prevGameBoard);
-
-    //   return prevGameBoard;
-    // });
-    // setLastSymbol((prevSymbol) => (prevSylasmbol === "X" ? "O" : "X"));
-    setGame((prevGame) => {
-      if (prevGame.board[rowIndex][colIndex] === null) {
-        prevGame.board[rowIndex][colIndex] = symbol;
-        prevGame.lastSymbol === "X"
-          ? (prevGame.lastSymbol = "O")
-          : (prevGame.lastSymbol = "X");
-        console.log(". ssd", prevGame);
+      if (
+        firtsSquareSymbol &&
+        firtsSquareSymbol === secondSquareSymbol &&
+        firtsSquareSymbol === thirdSquareSymbol
+      ) {
+        newGame.hasWinner = true;
+        const winner =
+          configGame.player1.symbol === newGame.lastSymbol
+            ? configGame.player1
+            : configGame.player2;
+        newGame.gameResults.push({
+          board: newGame.board,
+          winner: winner,
+        });
+        console.log("VITTORIA!");
       }
-      return { ...prevGame };
-    });
-    onUpdateResults();
+    }
+
+    onUpdateGame(newGame); //onUpdateGame richiama la funzione setState del padre
   }
 
   return (

@@ -2,21 +2,35 @@ import "./App.css";
 import { Player } from "./components/player";
 import GameBoard from "./components/game-board";
 import { useState } from "react";
-import type { Game, GameResults } from "./models/game";
-import type { PlayerGame } from "./models/player-game";
+import type { Game } from "./models/game";
 import { configGame } from "./config";
 
 function App() {
-  const [resuts, setResults] = useState<GameResults[]>([]);
+  //const [resuts, setResults] = useState<GameResults[]>([]);
 
-  function updateResults() {
-    setResults;
-  }
+  const [game, setGame] = useState<Game>({
+    board: configGame.board,
+    lastSymbol: configGame.player1.symbol,
+    hasWinner: false,
+    gameResults: [],
+  });
+  console.log("stato del gioco", game);
+  //console.log("stato della board", game.board);
 
-  const giocatore1: PlayerGame = {
-    name: "Giocatore 1",
-    symbol: "X",
-  };
+  /*
+  function updateResults(gameUpdated: Game) {
+    //console.log("partita finita", gameResult);
+
+    /*setResults((lastResults) => {
+      //lastResults.concat(gameResult);
+      console.log("array risultati", lastResults);
+
+      return { ...lastResults };
+    });*/
+
+  //console.log("risultati", game.gameResults);
+  //setGame(gameUpdated);
+  //  }
 
   return (
     <main>
@@ -30,7 +44,8 @@ function App() {
         </ol>
         <GameBoard
           initialPlayer={configGame.player1}
-          onUpdateResults={updateResults}
+          onUpdateGame={setGame}
+          game={game}
         />
       </div>
     </main>
