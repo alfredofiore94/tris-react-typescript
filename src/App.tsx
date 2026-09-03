@@ -2,10 +2,12 @@ import "./App.css";
 import { Player } from "./components/player";
 import GameBoard from "./components/game-board";
 import { useState } from "react";
-import type { Game } from "./models/game";
-import { configGame } from "./config";
+import type { BoardType, Game } from "./models/game";
 import ResetGame from "./components/reset-board";
+import initBoard, { configGame, initGame } from "./config";
+import { WINNING_COMBINATIONS } from "./utils/winning-combinations";
 
+/*
 const initialState = {
   board: configGame.board.map((row) => {
     return [...row];
@@ -13,30 +15,69 @@ const initialState = {
   turn: configGame.player1.symbol,
   hasWinner: false,
   gameResults: [],
-};
+};*/
 
 function App() {
   //const [resuts, setResults] = useState<GameResults[]>([]);
 
-  const [game, setGame] = useState<Game>(initialState);
-  //console.log("stato del gioco", game);
-  //console.log("stato della board", game.board);
+  const [game, setGame] = useState<Game>(initGame());
 
-  /*
-  function updateResults(gameUpdated: Game) {
-    //console.log("partita finita", gameResult);
+  const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
 
-    /*setResults((lastResults) => {
-      //lastResults.concat(gameResult);
-      console.log("array risultati", lastResults);
+  function handleSelectSquare(
+    rowIndex: number,
+    colIndex: number,
+    symbol: string,
+  ) {
+    const newGame = { ...game };
+    const newGameBoard: BoardType = [...gameBoard.map((row) => [...row])];
+    console.log("gameboard", gameBoard);
+    console.log("new game board", newGameBoard);
 
-      return { ...lastResults };
-    });*/
+    if (newGameBoard[rowIndex][colIndex] === null) {
+      newGameBoard[rowIndex][colIndex] = symbol;
+      newGame.turn === configGame.player1
+        ? (newGame.turn = configGame.player2)
+        : (newGame.turn = configGame.player1);
+      //console.log(". ssd", newGame);
+      checkWinning(newGame, newGameBoard);
+    }
+    console.log("click");
+    setGameBoard(newGameBoard); //onUpdateGame richiama la funzione setState del padre
+    setGame(newGame);
+  }
 
-  //console.log("risultati", game.gameResults);
-  //setGame(gameUpdated);
-  //  }
-  console.log("configGame", configGame);
+  function checkWinning(game: Game, gameBoard: BoardType) {
+    for (const combination of WINNING_COMBINATIONS) {
+      const firtsSquareSymbol =
+        gameBoard[combination[0].row][combination[0].column];
+      const secondSquareSymbol =
+        gameBoard[combination[1].row][combination[1].column];
+      const thirdSquareSymbol =
+        gameBoard[combination[2].row][combination[2].column];
+
+      if (
+        firtsSquareSymbol &&
+        firtsSquareSymbol === secondSquareSymbol &&
+        firtsSquareSymbol === thirdSquareSymbol
+      ) {
+        game.hasWinner = true;
+        const winner =
+          game.turn === configGame.player1
+            ? configGame.player2
+            : configGame.player1;
+        game.gameResults.push({
+          board: gameBoard,
+          winner: winner,
+        });
+        //console.log("VITTORIA!", winner);
+      }
+    }
+  }
+
+  console.log("game board", gameBoard);
+  console.log("game ", game);
+
   return (
     <main>
       <div id="game-container">
@@ -52,11 +93,11 @@ function App() {
           <ol>
             <ResetGame
               onReset={() => {
-                setGame((prevGame) => ({
-                  ...prevGame,
-                  board: configGame.board,
-                  lastSymbol: configGame.player1.symbol,
+                setGameBoard(initBoard());
+                setGame((oldGame) => ({
+                  ...oldGame,
                   hasWinner: false,
+                  turn: configGame.player1,
                 }));
               }}
             />
@@ -64,9 +105,10 @@ function App() {
         )}
 
         <GameBoard
-          initialPlayer={configGame.player1}
-          onUpdateGame={setGame}
+          //onUpdateGame={setGame}
+          onSelectSquare={handleSelectSquare}
           game={game}
+          gameBoard={gameBoard}
         />
       </div>
     </main>

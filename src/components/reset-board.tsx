@@ -8,8 +8,6 @@ interface GameBoardProps {
 }
 
 export default function ResetGame({ onReset }: GameBoardProps) {
-  const [initialPlayer, setInitialPlayer] = useState<PlayerGame>();
-
   return (
     <>
       <li>
