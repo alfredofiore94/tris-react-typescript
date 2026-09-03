@@ -7,7 +7,7 @@ interface GameBoardProps {
   //initialPlayer: PlayerGame;
   gameBoard: BoardType;
   game: Game;
-  onSelectSquare: (rowIndex: number, colIndex: number, symbol: string) => void;
+  onSelectSquare: (rowIndex: number, colIndex: number) => void;
 }
 const GameBoard: React.FC<GameBoardProps> = ({
   //initialPlayer,
@@ -25,7 +25,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <button
                   disabled={playerSymbol !== null || game.hasWinner}
                   onClick={() => {
-                    onSelectSquare(rowIndex, colIndex, game.turn.symbol);
+                    onSelectSquare(rowIndex, colIndex);
                   }}
                 >
                   {playerSymbol}

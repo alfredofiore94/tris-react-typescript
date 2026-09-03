@@ -27,15 +27,15 @@ function App() {
   function handleSelectSquare(
     rowIndex: number,
     colIndex: number,
-    symbol: string,
+    //symbol: string,
   ) {
     const newGame = { ...game };
-    const newGameBoard: BoardType = [...gameBoard.map((row) => [...row])];
+    const newGameBoard: BoardType = gameBoard.map((row) => [...row]);
     console.log("gameboard", gameBoard);
     console.log("new game board", newGameBoard);
 
     if (newGameBoard[rowIndex][colIndex] === null) {
-      newGameBoard[rowIndex][colIndex] = symbol;
+      newGameBoard[rowIndex][colIndex] = newGame.turn.symbol;
       newGame.turn === configGame.player1
         ? (newGame.turn = configGame.player2)
         : (newGame.turn = configGame.player1);
