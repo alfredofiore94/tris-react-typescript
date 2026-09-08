@@ -3,9 +3,10 @@ import { Player } from "./components/player";
 import GameBoard from "./components/game-board";
 import { useState } from "react";
 import type { BoardType, Game } from "./models/game";
-import ResetGame from "./components/reset-board";
+import ResetGame from "./components/reset-board/reset-board";
 import initBoard, { configGame, initGame } from "./config";
 import { WINNING_COMBINATIONS } from "./utils/winning-combinations";
+import TestLabel from "./components/test-label";
 
 /*
 const initialState = {
@@ -31,8 +32,8 @@ function App() {
   ) {
     const newGame = { ...game };
     const newGameBoard: BoardType = gameBoard.map((row) => [...row]);
-    console.log("gameboard", gameBoard);
-    console.log("new game board", newGameBoard);
+    //console.log("gameboard", gameBoard);
+    //console.log("new game board", newGameBoard);
 
     if (newGameBoard[rowIndex][colIndex] === null) {
       newGameBoard[rowIndex][colIndex] = newGame.turn.symbol;
@@ -42,7 +43,7 @@ function App() {
       //console.log(". ssd", newGame);
       checkWinning(newGame, newGameBoard);
     }
-    console.log("click");
+    //console.log("click");
     setGameBoard(newGameBoard); //onUpdateGame richiama la funzione setState del padre
     setGame(newGame);
   }
@@ -75,8 +76,8 @@ function App() {
     }
   }
 
-  console.log("game board", gameBoard);
-  console.log("game ", game);
+  //console.log("game board", gameBoard);
+  //console.log("game ", game);
 
   return (
     <main>
@@ -111,6 +112,9 @@ function App() {
           gameBoard={gameBoard}
         />
       </div>
+      {/* <div>
+        <TestLabel></TestLabel>
+      </div> */}
     </main>
   );
 }

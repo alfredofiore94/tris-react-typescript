@@ -1,0 +1,13 @@
+dialog {
+  background: #fcd256;
+  border-radius: 12px;
+  border-color: #3f3b00;
+}
+
+h2,
+label {
+  color: #3f3b00;
+}
+#reset-confirmation button {
+  background: #3f3b00;
+}
