@@ -10,4 +10,5 @@ label {
 }
 #reset-confirmation button {
   background: #3f3b00;
+  margin: 10px;
 }

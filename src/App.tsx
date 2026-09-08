@@ -7,6 +7,8 @@ import ResetGame from "./components/reset-board/reset-board";
 import initBoard, { configGame, initGame } from "./config";
 import { WINNING_COMBINATIONS } from "./utils/winning-combinations";
 import TestLabel from "./components/test-label";
+import Modal from "./components/modal";
+import ResetGameConfirmation from "./components/reset-game-confirmation";
 
 /*
 const initialState = {
@@ -24,6 +26,7 @@ function App() {
   const [game, setGame] = useState<Game>(initGame());
 
   const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   function handleSelectSquare(
     rowIndex: number,
@@ -79,43 +82,56 @@ function App() {
   //console.log("game board", gameBoard);
   //console.log("game ", game);
 
+  function resetGame(): void {
+    setGameBoard(initBoard());
+    setGame((oldGame) => ({
+      ...oldGame,
+      hasWinner: false,
+      turn: configGame.player1,
+    }));
+    setIsOpenModal(false);
+  }
+
   return (
-    <main>
-      <div id="game-container">
-        <ol id="players">
-          <Player {...configGame.player1}></Player>
-          <Player
-            name={configGame.player2.name}
-            symbol={configGame.player2.symbol}
-          ></Player>
-        </ol>
-
-        {game.hasWinner && (
-          <ol>
-            <ResetGame
-              onReset={() => {
-                setGameBoard(initBoard());
-                setGame((oldGame) => ({
-                  ...oldGame,
-                  hasWinner: false,
-                  turn: configGame.player1,
-                }));
-              }}
-            />
+    <>
+      <main>
+        <div id="game-container">
+          <ol id="players">
+            <Player {...configGame.player1}></Player>
+            <Player
+              name={configGame.player2.name}
+              symbol={configGame.player2.symbol}
+            ></Player>
           </ol>
-        )}
 
-        <GameBoard
-          //onUpdateGame={setGame}
-          onSelectSquare={handleSelectSquare}
-          game={game}
-          gameBoard={gameBoard}
-        />
-      </div>
-      {/* <div>
+          {game.hasWinner && (
+            <ol>
+              <ResetGame onReset={() => setIsOpenModal(true)} />
+            </ol>
+          )}
+
+          <GameBoard
+            //onUpdateGame={setGame}
+            onSelectSquare={handleSelectSquare}
+            game={game}
+            gameBoard={gameBoard}
+          />
+        </div>
+        {/* <div>
         <TestLabel></TestLabel>
       </div> */}
-    </main>
+      </main>
+      <Modal isOpen={isOpenModal}>
+        {
+          <ResetGameConfirmation
+            onConfirm={() => resetGame()}
+            onCancel={() => {
+              setIsOpenModal(false);
+            }}
+          />
+        }
+      </Modal>
+    </>
   );
 }
 
