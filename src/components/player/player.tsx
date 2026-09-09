@@ -1,6 +1,6 @@
-import { useState, type ChangeEvent } from "react";
-import type { PlayerGame } from "../models/player-game";
-
+import { useEffect, useState, type ChangeEvent } from "react";
+import type { PlayerGame } from "../../models/player-game";
+import "./player.css";
 export function Player(player: PlayerGame) {
   const [initialNamePlayer, setInitialNamePlayer] = useState<string>(
     player.name,
@@ -9,6 +9,23 @@ export function Player(player: PlayerGame) {
   const [editedNamePlayer, setEditedNamePlayer] =
     useState<string>(initialNamePlayer);
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
+
+  const [playersList, setPlayersList] = useState();
+
+  useEffect(() => {
+    console.log("Fetch partita");
+
+    fetch("https://dummyjson.com/users")
+      .then((response) => {
+        console.log("JSON response", response);
+
+        return response.json();
+      })
+      .then((resData) => {
+        setPlayersList(resData);
+        console.log("resData", resData);
+      });
+  }, []);
 
   function editName(event: ChangeEvent<HTMLInputElement>) {
     console.log(event.target.value);
@@ -28,7 +45,9 @@ export function Player(player: PlayerGame) {
               }}
             >
               Modifica nome giocatore
-            </button>{" "}
+            </button>
+
+            <button className="select-name">Seleziona nome</button>
           </>
         ) : (
           <>
