@@ -1,5 +1,4 @@
 import "./App.css";
-import { Player } from "./components/player";
 import GameBoard from "./components/game-board";
 import { useState } from "react";
 import type { BoardType, Game } from "./models/game";
@@ -9,6 +8,7 @@ import { WINNING_COMBINATIONS } from "./utils/winning-combinations";
 import TestLabel from "./components/test-label";
 import Modal from "./components/modal";
 import ResetGameConfirmation from "./components/reset-game-confirmation";
+import { Player } from "./components/player/player";
 
 /*
 const initialState = {
