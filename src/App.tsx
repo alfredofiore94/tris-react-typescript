@@ -101,6 +101,8 @@ function App() {
             <Player
               name={configGame.player2.name}
               symbol={configGame.player2.symbol}
+              lastName={""}
+              age={0}
             ></Player>
           </ol>
 

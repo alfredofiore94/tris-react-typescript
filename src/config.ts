@@ -3,9 +3,11 @@ import type { BoardType, Game } from "./models/game";
 export const configGame = {
   player1: {
     name: "Giocatore 1",
+    lastName: "",
+    age: 0,
     symbol: "X",
   },
-  player2: { name: "Giocatore 2", symbol: "O" },
+  player2: { name: "Giocatore 2", symbol: "O", lastName: "", age: 0 },
   board: [
     [null, null, null],
     [null, null, null],
