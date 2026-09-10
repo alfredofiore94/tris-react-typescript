@@ -1,8 +1,8 @@
 import type { PlayerDTO } from "../dto/player-dto";
 import type { ResponseModel } from "../dto/response-model";
-import type { AbstractRepository } from "./abstract-repository";
+import type { IRepository } from "./i-repository";
 
-export class PlayerRepository implements AbstractRepository<PlayerDTO> {
+export class PlayerRepository implements IRepository<PlayerDTO> {
   async getEntitiesAsync(): Promise<ResponseModel<PlayerDTO[]>> {
     try {
       const response: Response = await fetch("https://dummyjson.com/users");

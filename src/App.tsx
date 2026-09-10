@@ -1,14 +1,19 @@
 import "./App.css";
 import GameBoard from "./components/game-board";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { BoardType, Game } from "./models/game";
 import ResetGame from "./components/reset-board/reset-board";
 import initBoard, { configGame, initGame } from "./config";
 import { WINNING_COMBINATIONS } from "./utils/winning-combinations";
-import TestLabel from "./components/test-label";
 import Modal from "./components/modal";
 import ResetGameConfirmation from "./components/reset-game-confirmation";
 import { Player } from "./components/player/player";
+import type { PlayerGame } from "./models/player-game";
+import { PlayerConverter } from "./converters/player-converter";
+import { PlayerRepository } from "./repository/player-repository";
+import type { ResponseModel } from "./dto/response-model";
+import type { PlayerDTO } from "./dto/player-dto";
+import { PlayerService } from "./services-impl/player-service";
 
 /*
 const initialState = {
@@ -27,6 +32,29 @@ function App() {
 
   const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+  const [playersList, setPlayersList] = useState<PlayerGame[]>();
+
+  const playerConverter: PlayerConverter = new PlayerConverter();
+  const playerRepository: PlayerRepository = new PlayerRepository();
+
+  const playerService: PlayerService = new PlayerService(
+    playerConverter,
+    playerRepository,
+  );
+  useEffect(() => {
+    console.log("Fetch partita");
+
+    async function getData() {
+      try {
+        const players: PlayerGame[] = await playerService.getPlayersData();
+        console.log("playrs", players);
+
+        setPlayersList(players);
+      } catch (error) {}
+    }
+    getData();
+  }, []);
 
   function handleSelectSquare(
     rowIndex: number,
