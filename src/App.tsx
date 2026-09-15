@@ -14,6 +14,7 @@ import { PlayerRepository } from "./repository/player-repository";
 import type { ResponseModel } from "./dto/response-model";
 import type { PlayerDTO } from "./dto/player-dto";
 import { PlayerService } from "./services-impl/player-service";
+import { useFetch } from "./hooks/use-fetch";
 
 /*
 const initialState = {
@@ -33,16 +34,20 @@ function App() {
   const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
-  const [playersList, setPlayersList] = useState<PlayerGame[]>();
+  const [playersList, setPlayersList] = useState<{}>();
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [error, setError] = useState();
+  //const playerConverter: PlayerConverter = new PlayerConverter();
+  //const playerRepository: PlayerRepository = new PlayerRepository();
 
-  const playerConverter: PlayerConverter = new PlayerConverter();
-  const playerRepository: PlayerRepository = new PlayerRepository();
+  const playerService: PlayerService = new PlayerService();
+  //playerConverter,
+  //playerRepository,
 
-  const playerService: PlayerService = new PlayerService(
-    playerConverter,
-    playerRepository,
-  );
-  useEffect(() => {
+  const custom = useFetch(playerService.getPlayersData());
+  console.log("custom ", custom);
+
+  /*useEffect(() => {
     console.log("Fetch partita");
 
     async function getData() {
@@ -54,7 +59,7 @@ function App() {
       } catch (error) {}
     }
     getData();
-  }, []);
+  }, []);*/
 
   function handleSelectSquare(
     rowIndex: number,

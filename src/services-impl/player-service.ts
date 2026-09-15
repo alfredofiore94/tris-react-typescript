@@ -9,25 +9,21 @@ export class PlayerService implements IPlayerService {
   private _playerConverter: PlayerConverter;
   private _playerRepository: PlayerRepository;
 
-  constructor(
-    playerConverter: PlayerConverter,
-    playerRepository: PlayerRepository,
-  ) {
-    this._playerConverter = playerConverter;
-    this._playerRepository = playerRepository;
+  constructor() {
+    //playerConverter: PlayerConverter,
+    //playerRepository: PlayerRepository,
+    this._playerConverter = new PlayerConverter(); // playerConverter;
+    this._playerRepository = new PlayerRepository(); // playerRepository;
   }
 
   async getPlayersData(): Promise<PlayerGame[]> {
     const responseModel: ResponseModel<PlayerDTO[]> =
       await this._playerRepository.getEntitiesAsync();
 
-    try {
-      if (responseModel.metadata?.result) {
-        return this._playerConverter.toEntities(responseModel.payload!);
-      }
-    } catch (error) {
-      Error;
+    if (responseModel.metadata?.result) {
+      return this._playerConverter.toEntities(responseModel.payload!);
     }
-    return [];
+
+    throw new Error();
   }
 }
