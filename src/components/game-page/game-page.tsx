@@ -111,35 +111,33 @@ export function GamePage() {
 
   return (
     <>
-      <main>
-        <div id="game-container">
-          <ol id="players">
-            <Player {...configGame.player1}></Player>
-            <Player
-              name={configGame.player2.name}
-              symbol={configGame.player2.symbol}
-              lastName={""}
-              age={0}
-            ></Player>
+      <div id="game-container">
+        <ol id="players">
+          <Player {...configGame.player1}></Player>
+          <Player
+            name={configGame.player2.name}
+            symbol={configGame.player2.symbol}
+            lastName={""}
+            age={0}
+          ></Player>
+        </ol>
+
+        {game.hasWinner && (
+          <ol>
+            <ResetGame onReset={() => setIsOpenModal(true)} />
           </ol>
+        )}
 
-          {game.hasWinner && (
-            <ol>
-              <ResetGame onReset={() => setIsOpenModal(true)} />
-            </ol>
-          )}
-
-          <GameBoard
-            //onUpdateGame={setGame}
-            onSelectSquare={handleSelectSquare}
-            game={game}
-            gameBoard={gameBoard}
-          />
-        </div>
-        {/* <div>
+        <GameBoard
+          //onUpdateGame={setGame}
+          onSelectSquare={handleSelectSquare}
+          game={game}
+          gameBoard={gameBoard}
+        />
+      </div>
+      {/* <div>
         <TestLabel></TestLabel>
       </div> */}
-      </main>
       <Modal isOpen={isOpenModal}>
         {
           <ResetGameConfirmation

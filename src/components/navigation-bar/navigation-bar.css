@@ -1,0 +1,9 @@
+.navbar {
+  background-color: #3f3b00;
+}
+
+.nav-link-customize {
+  --bs-nav-link-color: white;
+  --bs-nav-link-hover-focus: red;
+  --bs-nav-link-hover-color: #ffc107;
+}
