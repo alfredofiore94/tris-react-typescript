@@ -44,7 +44,8 @@ header img {
   filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
 }
 
-h1 {
+h1,
+label {
   font-family: "Caprasimo", cursive;
   font-size: 3rem;
   margin: 0 auto 3rem auto;
