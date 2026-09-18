@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import initBoard, { configGame, initGame } from "../../config";
 import { useFetch } from "../../hooks/use-fetch";
 import type { Game, BoardType } from "../../models/game";
@@ -9,18 +9,22 @@ import Modal from "../modal";
 import { Player } from "../player/player";
 import ResetGame from "../reset-board/reset-board";
 import ResetGameConfirmation from "../reset-game-confirmation";
+import { GameContext } from "../../store/game-context";
+import { GameBoardContext } from "../../store/game-board-context";
 
 export function GamePage() {
   //const [resuts, setResults] = useState<GameResults[]>([]);
+  //const [game, setGame] = useState<Game>(initGame());
+  const { game, onUpdateGame } = useContext(GameContext);
 
-  const [game, setGame] = useState<Game>(initGame());
-
-  const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  //const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
+  const { gameBoard, onUpdateGameBoard } = useContext(GameBoardContext);
+  const [isOpenReset, setIsOpenReset] = useState<boolean>(false);
+  /*const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const [playersList, setPlayersList] = useState<{}>();
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState();*/
   //const playerConverter: PlayerConverter = new PlayerConverter();
   //const playerRepository: PlayerRepository = new PlayerRepository();
 
@@ -64,8 +68,8 @@ export function GamePage() {
       checkWinning(newGame, newGameBoard);
     }
     //console.log("click");
-    setGameBoard(newGameBoard); //onUpdateGame richiama la funzione setState del padre
-    setGame(newGame);
+    onUpdateGameBoard(newGameBoard); //onUpdateGame richiama la funzione setState del padre
+    onUpdateGame(newGame);
   }
 
   function checkWinning(game: Game, gameBoard: BoardType) {
@@ -99,16 +103,6 @@ export function GamePage() {
   //console.log("game board", gameBoard);
   //console.log("game ", game);
 
-  function resetGame(): void {
-    setGameBoard(initBoard());
-    setGame((oldGame) => ({
-      ...oldGame,
-      hasWinner: false,
-      turn: configGame.player1,
-    }));
-    setIsOpenModal(false);
-  }
-
   return (
     <>
       <div id="game-container">
@@ -124,10 +118,21 @@ export function GamePage() {
 
         {game.hasWinner && (
           <ol>
-            <ResetGame onReset={() => setIsOpenModal(true)} />
+            <li>
+              <span className="reset-game">
+                <button
+                  className="reset-button"
+                  onClick={() => setIsOpenReset(true)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#reset-modal"
+                >
+                  Resetta Gioco
+                </button>
+              </span>
+            </li>
           </ol>
         )}
-
+        <ResetGame />
         <GameBoard
           //onUpdateGame={setGame}
           onSelectSquare={handleSelectSquare}
@@ -135,19 +140,6 @@ export function GamePage() {
           gameBoard={gameBoard}
         />
       </div>
-      {/* <div>
-        <TestLabel></TestLabel>
-      </div> */}
-      <Modal isOpen={isOpenModal}>
-        {
-          <ResetGameConfirmation
-            onConfirm={() => resetGame()}
-            onCancel={() => {
-              setIsOpenModal(false);
-            }}
-          />
-        }
-      </Modal>
     </>
   );
 }

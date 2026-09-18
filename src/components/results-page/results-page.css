@@ -5,3 +5,8 @@
   --bs-table-bg: #aca788;
   --bs-table-striped-bg: ##c3ba78;
 }
+
+.no-result {
+  font-size: 20px;
+  vertical-align: middle;
+}

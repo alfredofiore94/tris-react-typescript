@@ -1,5 +1,10 @@
+import { useContext } from "react";
 import "./results-page.css";
+import { GameContext } from "../../store/game-context";
 export default function ResultsPage() {
+  const { game } = useContext(GameContext);
+  console.log("risultati", game);
+
   return (
     <>
       <div className="table-container">
@@ -9,28 +14,28 @@ export default function ResultsPage() {
               <th scope="col">#</th>
               <th scope="col">Nome</th>
               <th scope="col">Cognome</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Simbolo</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>John</td>
-              <td>Doe</td>
-              <td>@social</td>
-            </tr>
+            {game.gameResults.length > 0 ? (
+              game.gameResults.map((res, index) => (
+                <tr>
+                  <th scope="row">{index}</th>
+                  <td>{res.winner.name}</td>
+                  <td>{res.winner.lastName}</td>
+                  <td>{res.winner.symbol}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4}>
+                  <label className="no-result">
+                    Nessun risultato disponibile
+                  </label>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

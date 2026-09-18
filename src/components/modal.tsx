@@ -5,22 +5,30 @@ interface ModalProps {
   children: ReactNode;
 }
 export default function Modal({ isOpen, children }: ModalProps) {
-  const dialog = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
     if (isOpen) {
-      dialog.current?.showModal();
+      //dialog.current?.show();
       console.log("MODLALE APERTA");
     } else {
-      dialog.current?.close();
+      //dialog.current?.hidePopover();
       console.log("MODALE CHIUSA");
     }
   }, [isOpen]);
   return (
+    // <dialog ref={dialog} className="modal">
+
+    // </dialog>
     <>
-      <dialog ref={dialog} className="modal">
-        {children}
-      </dialog>
+      {isOpen && (
+        <div id="reset-modal" className="modal">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header"></div>
+              <div className="modal-body">{children}</div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
