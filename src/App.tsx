@@ -3,8 +3,8 @@ import "./App.css";
 import { GamePage } from "./components/pages/game-page/game-page";
 import ResultsPage from "./components/pages/results-page/results-page";
 import RootPage from "./components/root-page/root-page";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
+//import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/js/bootstrap.bundle.min";
 import ErrorPage from "./components/pages/error-page/error-page";
 const router = createBrowserRouter([
   {
