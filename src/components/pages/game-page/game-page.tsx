@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
-import initBoard, { configGame, initGame } from "../../config";
-import { useFetch } from "../../hooks/use-fetch";
-import type { Game, BoardType } from "../../models/game";
-import { PlayerService } from "../../services-impl/player-service";
-import { WINNING_COMBINATIONS } from "../../utils/winning-combinations";
-import GameBoard from "../game-board";
-import Modal from "../modal";
-import { Player } from "../player/player";
-import ResetGame from "../reset-board/reset-board";
-import ResetGameConfirmation from "../reset-game-confirmation";
-import { GameContext } from "../../store/game-context";
-import { GameBoardContext } from "../../store/game-board-context";
+import initBoard, { configGame, initGame } from "../../../config";
+import { useFetch } from "../../../hooks/use-fetch";
+import type { Game, BoardType } from "../../../models/game";
+import { PlayerService } from "../../../services-impl/player-service";
+import { WINNING_COMBINATIONS } from "../../../utils/winning-combinations";
+import GameBoard from "../../game-board";
+import Modal from "../../modal";
+import { Player } from "../../player/player";
+import ResetGame from "../../reset-board/reset-board";
+import ResetGameConfirmation from "../../reset-game-confirmation";
+import { GameContext } from "../../../store/game-context";
+import { GameBoardContext } from "../../../store/game-board-context";
 
 export function GamePage() {
   //const [resuts, setResults] = useState<GameResults[]>([]);
