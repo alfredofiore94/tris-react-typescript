@@ -2,8 +2,8 @@
   margin: 20px;
 }
 .table {
-  --bs-table-bg: #aca788;
-  --bs-table-striped-bg: ##c3ba78;
+  background-color: #aca788;
+  background-color: #c3ba78;
 }
 
 .no-result {

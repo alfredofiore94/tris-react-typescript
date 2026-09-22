@@ -10,17 +10,30 @@ import ResetGame from "../reset-board/reset-board";
 function RootPage() {
   const [game, setGame] = useState<Game>(initGame());
   const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
+
+  function handleUpdateGame(newGame: Game) {
+    setGame(newGame);
+  }
+
+  function handleUpdateGameBoard(newGameBoard: BoardType) {
+    setGameBoard(newGameBoard);
+  }
   return (
-    <GameContext value={{ game: game, onUpdateGame: setGame }}>
-      <GameBoardContext
-        value={{ gameBoard: gameBoard, onUpdateGameBoard: setGameBoard }}
-      >
-        <NavigationBar />
-        <main>
-          <Outlet />
-        </main>
-      </GameBoardContext>
-    </GameContext>
+    <>
+      <NavigationBar />
+      <main>
+        <GameContext value={{ game: game, onUpdateGame: handleUpdateGame }}>
+          <GameBoardContext
+            value={{
+              gameBoard: gameBoard,
+              onUpdateGameBoard: handleUpdateGameBoard,
+            }}
+          >
+            <Outlet />
+          </GameBoardContext>
+        </GameContext>
+      </main>
+    </>
   );
 }
 export default RootPage;

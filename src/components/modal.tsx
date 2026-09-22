@@ -20,14 +20,9 @@ export default function Modal({ isOpen, children }: ModalProps) {
     // </dialog>
     <>
       {isOpen && (
-        <div id="reset-modal" className="modal">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header"></div>
-              <div className="modal-body">{children}</div>
-            </div>
-          </div>
-        </div>
+        <dialog id="my_modal_1 " className="modal modal-open">
+          <div className="modal-box">{children}</div>
+        </dialog>
       )}
     </>
   );

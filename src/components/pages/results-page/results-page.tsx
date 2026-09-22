@@ -7,7 +7,7 @@ export default function ResultsPage() {
 
   return (
     <>
-      <div className="table-container">
+      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-15">
         <table className="table table-striped">
           <thead>
             <tr>
@@ -29,7 +29,7 @@ export default function ResultsPage() {
               ))
             ) : (
               <tr>
-                <td colSpan={4}>
+                <td colSpan={4} className="text-center">
                   <label className="no-result">
                     Nessun risultato disponibile
                   </label>

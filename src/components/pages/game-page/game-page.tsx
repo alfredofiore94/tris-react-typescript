@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import initBoard, { configGame, initGame } from "../../../config";
 import { useFetch } from "../../../hooks/use-fetch";
 import type { Game, BoardType } from "../../../models/game";
@@ -35,19 +35,11 @@ export function GamePage() {
   const custom = useFetch(playerService.getPlayersData());
   console.log("custom ", custom);
 
-  /*useEffect(() => {
-    console.log("Fetch partita");
-
-    async function getData() {
-      try {
-        const players: PlayerGame[] = await playerService.getPlayersData();
-        console.log("playrs", players);
-
-        setPlayersList(players);
-      } catch (error) {}
+  useEffect(() => {
+    if (!game.hasWinner) {
+      setIsOpenReset(false);
     }
-    getData();
-  }, []);*/
+  }, [game.hasWinner]);
 
   function handleSelectSquare(
     rowIndex: number,
@@ -68,8 +60,8 @@ export function GamePage() {
       checkWinning(newGame, newGameBoard);
     }
     //console.log("click");
-    onUpdateGameBoard(newGameBoard); //onUpdateGame richiama la funzione setState del padre
-    onUpdateGame(newGame);
+    onUpdateGameBoard(newGameBoard);
+    onUpdateGame(newGame); //onUpdateGame richiama la funzione handleupdateGame del padre
   }
 
   function checkWinning(game: Game, gameBoard: BoardType) {
@@ -123,8 +115,6 @@ export function GamePage() {
                 <button
                   className="reset-button"
                   onClick={() => setIsOpenReset(true)}
-                  data-bs-toggle="modal"
-                  data-bs-target="#reset-modal"
                 >
                   Resetta Gioco
                 </button>
@@ -132,7 +122,6 @@ export function GamePage() {
             </li>
           </ol>
         )}
-        <ResetGame />
         <GameBoard
           //onUpdateGame={setGame}
           onSelectSquare={handleSelectSquare}
@@ -140,6 +129,8 @@ export function GamePage() {
           gameBoard={gameBoard}
         />
       </div>
+
+      <ResetGame isResetVisible={isOpenReset} />
     </>
   );
 }
