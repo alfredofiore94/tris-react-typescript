@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import "./App.css";
-import { GamePage } from "./components/pages/game-page/game-page";
-import ResultsPage from "./components/pages/results-page/results-page";
+import { GamePage } from "./pages/game-page/game-page";
+import ResultsPage from "./pages/results-page/results-page";
 import RootPage from "./components/root-page/root-page";
 //import "bootstrap/dist/css/bootstrap.min.css";
 //import "bootstrap/dist/js/bootstrap.bundle.min";
-import ErrorPage from "./components/pages/error-page/error-page";
-import PlayersPage from "./components/pages/players-pages/players-page";
-import AddPlayersPage from "./components/pages/players-pages/add-player/add-player";
+import ErrorPage from "./pages/error-page/error-page";
+import PlayersPage from "./pages/players-pages/players-page";
+import AddPlayersPage from "./pages/players-pages/add-player/add-player";
 const router = createBrowserRouter([
   {
     path: "/",

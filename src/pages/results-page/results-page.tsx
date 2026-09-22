@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "./results-page.css";
-import { GameContext } from "../../../store/game-context";
+import { GameContext } from "../../store/game-context";
 export default function ResultsPage() {
   const { game } = useContext(GameContext);
   console.log("risultati", game);

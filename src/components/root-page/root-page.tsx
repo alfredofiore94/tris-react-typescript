@@ -5,7 +5,7 @@ import type { BoardType, Game } from "../../models/game";
 import { useState } from "react";
 import initBoard, { initGame } from "../../config";
 import { GameBoardContext } from "../../store/game-board-context";
-import ResetGame from "../reset-board/reset-board";
+import ResetGame from "../../pages/reset-board/reset-board";
 
 function RootPage() {
   const [game, setGame] = useState<Game>(initGame());

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { GameBoardContext } from "../../store/game-board-context";
-import Modal from "../modal";
-import ResetGameConfirmation from "../reset-game-confirmation";
+import Modal from "../../components/modal";
+import ResetGameConfirmation from "../../components/reset-game-confirmation";
 import "./reset-board.css";
 import initBoard, { configGame } from "../../config";
 import { GameContext } from "../../store/game-context";
