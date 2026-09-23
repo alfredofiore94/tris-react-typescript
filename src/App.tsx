@@ -2,12 +2,13 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "./App.css";
 import { GamePage } from "./pages/game-page/game-page";
 import ResultsPage from "./pages/results-page/results-page";
-import RootPage from "./components/root-page/root-page";
+
 //import "bootstrap/dist/css/bootstrap.min.css";
 //import "bootstrap/dist/js/bootstrap.bundle.min";
 import ErrorPage from "./pages/error-page/error-page";
 import PlayersPage from "./pages/players-pages/players-page";
 import AddPlayersPage from "./pages/players-pages/add-player/add-player";
+import RootPage from "./pages/root-page/root-page";
 const router = createBrowserRouter([
   {
     path: "/",

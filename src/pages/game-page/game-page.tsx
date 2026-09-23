@@ -28,12 +28,12 @@ export function GamePage() {
   //const playerConverter: PlayerConverter = new PlayerConverter();
   //const playerRepository: PlayerRepository = new PlayerRepository();
 
-  const playerService: PlayerService = new PlayerService();
+  // const playerService: PlayerService = new PlayerService();
   //playerConverter,
   //playerRepository,
 
-  const custom = useFetch(playerService.getPlayersData());
-  console.log("custom ", custom);
+  // const custom = useFetch(playerService.getPlayersData());
+  //console.log("custom ", custom);
 
   useEffect(() => {
     if (!game.hasWinner) {
@@ -103,6 +103,7 @@ export function GamePage() {
           <Player
             name={configGame.player2.name}
             symbol={configGame.player2.symbol}
+            email={""}
             lastName={""}
             age={0}
           ></Player>

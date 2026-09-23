@@ -6,8 +6,15 @@ export const configGame = {
     lastName: "",
     age: 0,
     symbol: "X",
+    email: "",
   },
-  player2: { name: "Giocatore 2", symbol: "O", lastName: "", age: 0 },
+  player2: {
+    name: "Giocatore 2",
+    symbol: "O",
+    lastName: "",
+    email: "",
+    age: 0,
+  },
   board: [
     [null, null, null],
     [null, null, null],

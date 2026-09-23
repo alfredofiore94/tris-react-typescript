@@ -3,15 +3,14 @@ import "./results-page.css";
 import { GameContext } from "../../store/game-context";
 export default function ResultsPage() {
   const { game } = useContext(GameContext);
-  console.log("risultati", game);
 
   return (
     <>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-15">
         <table className="table table-striped">
           <thead>
-            <tr>
-              <th scope="col">#</th>
+            <tr className="text-center">
+              <th scope="col">ID</th>
               <th scope="col">Nome</th>
               <th scope="col">Cognome</th>
               <th scope="col">Simbolo</th>
@@ -28,7 +27,7 @@ export default function ResultsPage() {
                 </tr>
               ))
             ) : (
-              <tr>
+              <tr className="text-center">
                 <td colSpan={4} className="text-center">
                   <label className="no-result">
                     Nessun risultato disponibile

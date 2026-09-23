@@ -9,9 +9,10 @@ export class PlayerConverter extends AbstractConverter<PlayerDTO, PlayerGame> {
   toEntity(dto: PlayerDTO): PlayerGame {
     const entity: PlayerGame = {
       name: dto.firstName,
-      symbol: "",
+      symbol: Math.random() < 0.5 ? "X" : "O",
       lastName: dto.lastName,
       age: dto.age,
+      email: dto.email,
     };
     return entity;
   }

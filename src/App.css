@@ -46,7 +46,9 @@ header img {
 }
 
 h1,
-label {
+label,
+th,
+td {
   font-family: "Caprasimo", cursive;
 
   color: #3f3b00;

@@ -1,23 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
-import type { PlayerGame } from "../models/player-game";
-import { PlayerConverter } from "../converters/player-converter";
-import { PlayerRepository } from "../repository/player-repository";
-import { PlayerService } from "../services-impl/player-service";
+import { useEffect, useState } from "react";
 
-export function useFetch(fetchFn: Promise<any>) {
+export function useFetch<T>(fetchFn: () => Promise<any>) {
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState("");
-  const [fetchedData, setFetchedData] = useState({});
+  const [fetchedData, setFetchedData] = useState<T>();
 
   useEffect(() => {
-    console.log("Fetch partita");
-
+    let ignore = false;
     async function getData() {
       try {
         setIsFetching(true);
         //const players: PlayerGame[] = await playerService.getPlayersData();
-        const fetch = await fetchFn;
-        console.log("fetch data", fetch);
+        const fetch = await fetchFn();
 
         setFetchedData(fetch);
         setIsFetching(false);
@@ -27,6 +21,10 @@ export function useFetch(fetchFn: Promise<any>) {
       }
     }
     getData();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
   return { isFetching, error, fetchedData };
 }
