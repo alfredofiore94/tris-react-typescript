@@ -13,6 +13,12 @@ export default function PlayersPage() {
 
   return (
     <>
+      <button
+        className="btn  mt-4"
+        onClick={() => navigateHandler("new-player")}
+      >
+        Nuovo giocatore
+      </button>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-15">
         <table className="table ">
           <thead>
@@ -49,13 +55,6 @@ export default function PlayersPage() {
           </tbody>
         </table>
       </div>
-
-      <button
-        className="btn  mt-4"
-        onClick={() => navigateHandler("new-player")}
-      >
-        Nuovo giocatore
-      </button>
     </>
   );
 }

@@ -1,0 +1,13 @@
+.form-user {
+  background-color: #c3ba78;
+}
+
+.form-user input,
+select {
+  background-color: #aca788;
+  color: #3f3b00;
+}
+
+.label {
+  color: #3f3b00;
+}
