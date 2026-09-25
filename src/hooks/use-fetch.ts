@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export function useFetch<T>(fetchFn: () => Promise<any>) {
+export function useFetch<T>(fetchFn: () => Promise<T>) {
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [fetchedData, setFetchedData] = useState<T>();
 
-  useEffect(() => {
-    let ignore = false;
-    async function getData() {
-      try {
-        setIsFetching(true);
-        //const players: PlayerGame[] = await playerService.getPlayersData();
-        const fetch = await fetchFn();
+  const getData = useCallback(async () => {
+    try {
+      setIsFetching(true);
+      //const players: PlayerGame[] = await playerService.getPlayersData();
+      const response = await fetchFn();
 
-        setFetchedData(fetch);
-        setIsFetching(false);
-      } catch (error) {
-        //setError(error);
-        console.log("ERRORE!", error);
-      }
+      setFetchedData(response);
+      setIsFetching(false);
+    } catch (error) {
+      //setError(error);
+      console.log("ERRORE!", error);
     }
-    getData();
-
-    return () => {
-      ignore = true;
-    };
   }, []);
-  return { isFetching, error, fetchedData };
+
+  return { isFetching, error, fetchedData, getData };
 }

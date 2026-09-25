@@ -9,6 +9,7 @@ import ErrorPage from "./pages/error-page/error-page";
 import PlayersPage from "./pages/players-pages/players-page";
 import AddPlayersPage from "./pages/players-pages/add-player/add-player";
 import RootPage from "./pages/root-page/root-page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,8 +27,13 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+const queryClient = new QueryClient();
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />;
+    </QueryClientProvider>
+  );
 }
 
 export default App;

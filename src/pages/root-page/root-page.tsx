@@ -15,34 +15,47 @@ function RootPage() {
   const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
   const [players, setPlayers] = useState<PlayerGame[]>([]);
 
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [error, setError] = useState<string>();
+  //const [isFetching, setIsFetching] = useState<boolean>(false);
+  // const [error, setError] = useState<string>();
   //const [fetchedData, setFetchedData] = useState<PlayerGame[]>([]);
 
   const playerService: PlayerService = new PlayerService();
 
-  useEffect(() => {
-    let ignore = false;
-    async function getData() {
-      try {
-        setIsFetching(true);
-        const fetch = await playerService.getPlayersData();
+  /*const {
+    error,
+    isFetching,
+    fetchedData: players,
+    getData,
+  } = useFetch(playerService.getPlayersData);
+  console.log("players", players);*/
 
-        setPlayers(fetch);
-        console.log("fetch data", fetch);
+  // useEffect(() => {
+  //   let ignore = false;
+  //   async function getData() {
+  //     try {
+  //       setIsFetching(true);
+  //       const fetch = await playerService.getPlayersData();
 
-        setIsFetching(false);
-      } catch (error) {
-        setError("Errore");
-        console.log("ERRORE!", error);
-      }
-    }
+  //       setPlayers(fetch);
+  //       console.log("fetch data", fetch);
+
+  //       setIsFetching(false);
+  //     } catch (error) {
+  //       setError("Errore");
+  //       console.log("ERRORE!", error);
+  //     }
+  //   }
+  //   getData();
+
+  //   return () => {
+  //     ignore = true;
+  //   };
+  // }, []);
+
+  /* useEffect(() => {
     getData();
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
+    console.log("players", players);
+  }, []);*/
 
   function handleUpdateGame(newGame: Game) {
     setGame(newGame);
@@ -55,17 +68,26 @@ function RootPage() {
   function handleUpdatePlayers(newListPlayers: PlayerGame[]) {
     setPlayers(newListPlayers);
   }
+  function handleAddPlayer(newPlayer: PlayerGame) {
+    //const newplayers: PlayerGame[] = { ...players };
+    //newplayers.push(newPlayer);
+    setPlayers((oldPlayers) => {
+      const newPlayers = { ...oldPlayers };
+      newPlayers.push(newPlayer);
+      return newPlayers;
+    });
+  }
 
-  if (isFetching) return <p>Caricamento giocatori in corso...</p>;
+  //if (isFetching) return <p>Caricamento giocatori in corso...</p>;
 
   return (
     <>
       <NavigationBar />
-      {error && (
+      {/* {error && (
         <div role="alert" className="alert alert-error alert-soft">
           <span>Errore durante il caricamento dei dati dei giocatori!</span>
         </div>
-      )}
+      )} */}
       <main>
         <GameContext value={{ game: game, onUpdateGame: handleUpdateGame }}>
           <GameBoardContext
@@ -75,7 +97,11 @@ function RootPage() {
             }}
           >
             <PlayersContext
-              value={{ players: players, onUpdatePlayers: handleUpdatePlayers }}
+              value={{
+                players: players!,
+                onUpdatePlayers: handleUpdatePlayers,
+                onAddPlayer: handleAddPlayer,
+              }}
             >
               <Outlet />
             </PlayersContext>
