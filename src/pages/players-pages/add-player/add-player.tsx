@@ -72,7 +72,7 @@ export default function AddPlayersPage() {
           required
         />
 
-        {/* <label className="label">Simbolo gioco</label>
+        <label className="label">Simbolo gioco</label>
         <label className="select">
           <select>
             <option disabled selected value="">
@@ -81,7 +81,7 @@ export default function AddPlayersPage() {
             <option>X</option>
             <option>O</option>
           </select>
-        </label> */}
+        </label>
         <label className="label">Email</label>
         <input
           type="email"

@@ -19,6 +19,7 @@ export function GamePage() {
 
   //const [gameBoard, setGameBoard] = useState<BoardType>(() => initBoard());
   const { gameBoard, onUpdateGameBoard } = useContext(GameBoardContext);
+
   const [isOpenReset, setIsOpenReset] = useState<boolean>(false);
   /*const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
@@ -52,10 +53,10 @@ export function GamePage() {
     //console.log("new game board", newGameBoard);
 
     if (newGameBoard[rowIndex][colIndex] === null) {
-      newGameBoard[rowIndex][colIndex] = newGame.turn.symbol;
-      newGame.turn === configGame.player1
-        ? (newGame.turn = configGame.player2)
-        : (newGame.turn = configGame.player1);
+      newGameBoard[rowIndex][colIndex] = newGame.turnPlayer.symbol;
+      newGame.turnPlayer === newGame.player1
+        ? (newGame.turnPlayer = newGame.player2)
+        : (newGame.turnPlayer = newGame.player1);
       //console.log(". ssd", newGame);
       checkWinning(newGame, newGameBoard);
     }
@@ -80,9 +81,7 @@ export function GamePage() {
       ) {
         game.hasWinner = true;
         const winner =
-          game.turn === configGame.player1
-            ? configGame.player2
-            : configGame.player1;
+          game.turnPlayer === game.player1 ? game.player2 : game.player1;
         game.gameResults.push({
           board: gameBoard,
           winner: winner,
@@ -99,12 +98,12 @@ export function GamePage() {
     <>
       <div id="game-container">
         <ol id="players">
-          <Player {...configGame.player1}></Player>
+          <Player {...game.player1}></Player>
           <Player
-            name={configGame.player2.name}
-            symbol={configGame.player2.symbol}
+            name={game.player2.name}
+            lastName={game.player2.lastName}
+            symbol={game.player2.symbol}
             email={""}
-            lastName={""}
             age={0}
           ></Player>
         </ol>

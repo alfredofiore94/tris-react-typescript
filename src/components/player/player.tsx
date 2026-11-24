@@ -4,7 +4,7 @@ import "./player.css";
 
 export function Player(player: PlayerGame) {
   const [initialNamePlayer, setInitialNamePlayer] = useState<string>(
-    player.name,
+    player.name + " " + player.lastName,
   );
 
   const [editedNamePlayer, setEditedNamePlayer] =
@@ -23,15 +23,24 @@ export function Player(player: PlayerGame) {
           <>
             <span className="player-name"> {initialNamePlayer}</span>
             <span className="player-symbol"> {player.symbol}</span>
-            <button
+            {/* <button
               onClick={() => {
                 setIsEditingName(true);
               }}
             >
               Modifica nome giocatore
-            </button>
+            </button> */}
 
-            <button className="select-name">Seleziona nome</button>
+            {/* <button className="select-name">Seleziona giocatore</button> */}
+            <label className="select w-45">
+              <select>
+                <option disabled selected value="">
+                  {player.name + " " + player.lastName}
+                </option>
+                <option>X</option>
+                <option>O</option>
+              </select>
+            </label>
           </>
         ) : (
           <>

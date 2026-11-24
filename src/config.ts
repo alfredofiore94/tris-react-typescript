@@ -2,16 +2,16 @@ import type { BoardType, Game } from "./models/game";
 
 export const configGame = {
   player1: {
-    name: "Giocatore 1",
-    lastName: "",
+    name: "Giocatore",
+    lastName: "1",
     age: 0,
     symbol: "X",
     email: "",
   },
   player2: {
-    name: "Giocatore 2",
+    name: "Giocatore",
     symbol: "O",
-    lastName: "",
+    lastName: "2",
     email: "",
     age: 0,
   },
@@ -35,7 +35,9 @@ export default function initBoard(): BoardType {
 }
 export function initGame(): Game {
   return {
-    turn: configGame.player1,
+    turnPlayer: Math.random() < 0.5 ? configGame.player1 : configGame.player2,
+    player1: configGame.player1,
+    player2: configGame.player2,
     hasWinner: false,
     gameResults: [],
   };

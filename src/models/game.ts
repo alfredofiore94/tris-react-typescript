@@ -2,7 +2,9 @@ import type { PlayerGame } from "./player-game";
 
 export type BoardType = (string | null)[][];
 interface GameBase {
-  turn: PlayerGame;
+  player1: PlayerGame;
+  player2: PlayerGame;
+  turnPlayer: PlayerGame;
   hasWinner: boolean;
 }
 export interface GameResult {

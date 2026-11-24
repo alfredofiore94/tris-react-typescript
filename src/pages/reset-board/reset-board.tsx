@@ -18,7 +18,7 @@ export default function ResetGame({ isResetVisible }: ResetProps) {
     onUpdateGame({
       ...game,
       hasWinner: false,
-      turn: configGame.player1,
+      turnPlayer: configGame.player1,
     });
     setIsOpenModal(false);
   }
